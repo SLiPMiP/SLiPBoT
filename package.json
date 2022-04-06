@@ -1,12 +1,12 @@
 {
     "name": "slipbot",
     "version": "1.0.0",
-    "description": "",
+    "description": "Personal bot, created for learning",
     "main": "slipbot.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "",
+    "author": "SLiPMiP",
     "license": "ISC",
     "dependencies": {
         "discord.js": "^13.6.0",
