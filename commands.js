@@ -2,8 +2,9 @@ const who = require("./commands/who.js")
 const asked = require('./commands/asked.js')
 const gif = require('./commands/gif.js')
 const mastermind = require('./commands/mastermind.js')
+const mm = mastermind
 
-const commands = { gif, who, asked, mastermind }
+const commands = { gif, who, asked, mastermind, mm }
 const cmds = Object.keys(commands)
 
 
