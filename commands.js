@@ -4,6 +4,7 @@ const gif = require('./commands/gif.js')
 const mastermind = require('./commands/mastermind.js')
 
 const commands = { gif, who, asked, mastermind }
+const cmds = Object.keys(commands)
 
 
 
@@ -13,20 +14,21 @@ module.exports = function(msg) {
     let tokens = msg.content.split(" ")
     let command = tokens.shift()
 
-
-    if (msg.author.id == process.env.BOTID) {
-        return
-    } else {
-        console.log("   cmd:", command)
-    }
-
     // commands with prefixes work now
     // but commands that require prefix also works without
     if (command.charAt(0) === "!") {
         command = command.substring(1)
         commands[command](msg, tokens)
+
+        if (msg.author.id == process.env.BOTID) {
+            return
+        } else {
+            console.log("   cmd:", command)
+        }
     } else {
-        commands[command](msg, tokens)
+        if (cmds.includes(command)) {
+            commands[command](msg, tokens)
+        }
     }
 
 }
