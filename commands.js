@@ -5,6 +5,8 @@ const mastermind = require('./commands/mastermind.js')
 
 const commands = { gif, who, asked, mastermind }
 
+
+
 module.exports = function(msg) {
     console.log(msg.author.username, ':', msg.content)
 
@@ -18,12 +20,13 @@ module.exports = function(msg) {
         console.log("   cmd:", command)
     }
 
-
+    // commands with prefixes work now
+    // but commands that require prefix also works without
     if (command.charAt(0) === "!") {
         command = command.substring(1)
-            // commands[command](msg, tokens)
+        commands[command](msg, tokens)
+    } else {
+        commands[command](msg, tokens)
     }
-
-    commands[command](msg, tokens)
 
 }
