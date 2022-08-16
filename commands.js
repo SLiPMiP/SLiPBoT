@@ -10,8 +10,6 @@ const cmds = Object.keys(commands)
 
 
 module.exports = function(msg) {
-    console.log(msg.author.username, ':', msg.content)
-
     let tokens = msg.content.split(" ")
     let command = tokens.shift()
 
@@ -20,16 +18,17 @@ module.exports = function(msg) {
     if (command.charAt(0) === "!") {
         command = command.substring(1)
         commands[command](msg, tokens)
-
-        if (msg.author.id == process.env.BOTID) {
-            return
-        } else {
-            console.log("   cmd:", command)
-        }
     } else {
         if (cmds.includes(command)) {
             commands[command](msg, tokens)
         }
+    }
+
+    if (msg.author.id == process.env.BOTID) {
+        return
+    } else {
+        console.log(msg.author.username, ':', msg.content)
+        console.log("   cmd:", command)
     }
 
 }

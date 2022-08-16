@@ -4,6 +4,8 @@ const guessslot = (':white_square_button:')
 const indicatorslot = (':radio_button:')
 const colors = ['red', 'green', 'purple', 'yellow', 'white', 'black']
 
+let game = 0
+
 // super secret code
 let ssc = []
 
@@ -30,12 +32,40 @@ function codegen() {
         sscc.push(colors[ssc[i]])
     }
 }
+
+function start(msg) {
+    game = 1
+    msg.channel.send('YOU DARE CHALLENGE Me??!?\n IN A DUEL OF WITS NO LESSS!??\nI SHALL TEST YOUR WITS,\nONLY THE MINDS OF MASTERS CAN GUESS MY SECRET COOOOOoooOODeee.....\n-------------------\nthe colors to choose from are\n***' + colors.join(" ") + '***\nHMMmmmmmMMM what COooOODE should i Useee??...')
+    codegen()
+    tries = 10
+    msg.channel.send(`${tries}`)
+    msg.channel.send('My mastermind-inator has generated an un-guessable code now!\nRemember, you only have 10 tries!')
+}
+
 // right color slot
 let rcs = 0;
 // right color
 let rc = 0
 
-async function guess(msg, args) {
+function end() {
+    game = 0
+    rcs = 0
+    rc = 0
+    ssc = []
+    sscc = []
+    troes = 0
+}
+
+async function congratulations(msg) {
+    let keywords = 'explosion'
+    let curl = `https://tenor.googleapis.com/v2/search?q=${keywords}&key=${process.env.TENORKEY}&client_key=my_test_app`
+    let response = await fetch(curl)
+    let json = await response.json()
+    const randomgif = Math.floor(Math.random() * json.results.length)
+    msg.channel.send(json.results[randomgif].url)
+}
+
+function guess(msg, args) {
     for (let i = 0; i < args.length; i++) {
         if (sscc[i] == args[i]) {
             rcs += 1
@@ -43,16 +73,15 @@ async function guess(msg, args) {
             rc += 1
         }
     }
-    if (rcs = 4) {
-        msg.channel.send('youve guessed:\n***' + args.join(" ") + '***\n***' + rcs + '*** right colors, in the right slot\n***' + rc + '***right colors, but in the wrong slots\nWait a minute, youve WONN!?!??!1?!?1+1++?!+1')
-        msg.channel.send('AAAAAAAAAAAAA HOW COULD THIS HAAAAPEEEENNNNNNN\n MY SON-INATOR WILL NEVER LOOK ME IN THE EYES AGAIN\n HOW COULD YOU DO THIS, MY REPUTATION HAS BEEN SEVERELY DAMAGED\nINITIATE BOMB-INATOR')
-        let keywords = 'explosion'
-        let curl = `https://tenor.googleapis.com/v2/search?q=${keywords}&key=${process.env.TENORKEY}&client_key=my_test_app&limit=5`
-        let response = await fetch(curl)
-        let json = await response.json()
-        const randomgif = Math.floor(Math.random() * json.results.length)
-        msg.channel.send(json.results[randomgif].url)
+    msg.channel.send('youve guessed:\n***' + args.join(" ") + '***\n***' + rcs + '*** right colors, in the right slot\n***' + rc + '***right colors, but in the wrong slots')
+    msg.channel.send(`tries left: ${tries}`)
+    if (rcs == 4) {
+        msg.channel.send('youve won!')
+        congratulations(msg)
+        end()
     }
+    rcs = 0
+    rc = 0
 }
 
 module.exports = function(msg, args) {
@@ -77,16 +106,40 @@ module.exports = function(msg, args) {
     }
 
     if (args[0] == 'start' || args[0] == 's') {
-        msg.channel.send('YOU DARE CHALLENGE Me??!?\n IN A DUEL OF WITS NO LESSS!??\nI SHALL TEST YOUR WITS,\nONLY THE MINDS OF MASTERS CAN GUESS MY SECRET COOOOOoooOODeee.....\n-------------------\nthe colors to choose from are\n***' + colors.join(" ") + '***\nHMMmmmmmMMM what COooOODE should i Useee??...')
-        codegen()
-        tries = 10
-        msg.channel.send('My mastermind-inator has generated an un-guessable code now!\nRemember, you only have 10 tries!')
+        start(msg)
     }
 
     if (args[0] == 'guess' || args[0] == 'g') {
-        args.shift()
-        guess(msg, args)
-        rcs = 0
-        rc = 0
+        if (game = 1) {
+            args.shift()
+            if (args.length == 4) {
+                if (tries > 0) {
+                    tries -= 1
+                    guess(msg, args)
+                }
+                rcs = 0
+                rc = 0
+            }
+        } else {
+            msg.channel.send('you need to start a game before you can guess ;)')
+        }
     }
+
+    if (args[0] == 'end' || args[0] == 'e') {
+        end()
+    }
+
+    if (args[0] == 'restart' || args[0] == 'r') {
+        end()
+        start()
+    }
+
+    if (args[0] == 'rules') {
+
+    }
+
+    if (args[0] == 'm') {
+        as
+    }
+
 }

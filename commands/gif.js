@@ -6,7 +6,7 @@ module.exports = async function(msg, args) {
     } else {
         keywords = 'gif'
     }
-    let curl = `https://tenor.googleapis.com/v2/search?q=${keywords}&key=${process.env.TENORKEY}&client_key=my_test_app&limit=10`
+    let curl = `https://tenor.googleapis.com/v2/search?q=${keywords}&key=${process.env.TENORKEY}&client_key=my_test_app`
     let response = await fetch(curl)
     let json = await response.json()
     const randomgif = Math.floor(Math.random() * json.results.length)
