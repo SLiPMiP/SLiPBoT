@@ -53,12 +53,14 @@ function end() {
     rc = 0
     ssc = []
     sscc = []
-    troes = 0
+    tries = 0
 }
 
-async function congratulations(msg) {
-    let keywords = 'explosion'
-    let curl = `https://tenor.googleapis.com/v2/search?q=${keywords}&key=${process.env.TENORKEY}&client_key=my_test_app`
+let thing = ''
+
+function gif(arg){
+    let keyword = arg
+    let curl = `https://tenor.googleapis.com/v2/search?q=${keyword}&key=${process.env.TENORKEY}&client_key=my_test_app`
     let response = await fetch(curl)
     let json = await response.json()
     const randomgif = Math.floor(Math.random() * json.results.length)
@@ -76,20 +78,26 @@ function guess(msg, args) {
     msg.channel.send('youve guessed:\n***' + args.join(" ") + '***\n***' + rcs + '*** right colors, in the right slot\n***' + rc + '***right colors, but in the wrong slots')
     msg.channel.send(`tries left: ${tries}`)
     if (rcs == 4) {
-        msg.channel.send('youve won!')
-        congratulations(msg)
+        msg.channel.send('you have won!')
+        gif("winner")
         end()
     }
     rcs = 0
     rc = 0
 }
 
+function lose(){
+    msg.channel.send('you have lost!')
+    gif("loser")
+    end()
+}
+
 module.exports = function(msg, args) {
 
 
-    if (args[0] == 'test' || args[0] == 't') {
-        msg.channel.send('Mastermind!\nempty guess slot ' + guessslot + '\ncolor right/wrong/almost slot ' + indicatorslot + '\ncolors available ' + colors.join(" ") + '\ncolor code generated ' + ssc.join(" ") + '\ncolors from generated code ' + sscc.join(" "))
-    }
+    // if (args[0] == 'test' || args[0] == 't') {
+    //     msg.channel.send('Mastermind!\nempty guess slot ' + guessslot + '\ncolor right/wrong/almost slot ' + indicatorslot + '\ncolors available ' + colors.join(" ") + '\ncolor code generated ' + ssc.join(" ") + '\ncolors from generated code ' + sscc.join(" "))
+    // }
 
     if (msg.author.id == process.env.SLIPID) {
         if (args[0] == 'ass' || args[0] == 'a') {
@@ -102,7 +110,7 @@ module.exports = function(msg, args) {
     }
 
     if (args.length == 0) {
-        msg.channel.send("You must define what you want\nheres a list of all the commands\nmastermind + \n**start|end|restart|rules**\n;**guess** (or just g)\n;**help** (how to play).\nTo start a game, use the command:\n!mastermind start")
+        msg.channel.send('You must define what you want\nSay "mastermind commands" to se a list of the commands\n or just use mastermind start to start a game')
     }
 
     if (args[0] == 'start' || args[0] == 's') {
@@ -116,30 +124,36 @@ module.exports = function(msg, args) {
                 if (tries > 0) {
                     tries -= 1
                     guess(msg, args)
+                } else if (tries = 0 ) {
+                    lose()
                 }
                 rcs = 0
                 rc = 0
             }
         } else {
-            msg.channel.send('you need to start a game before you can guess ;)')
+            msg.channel.send('You need to start a game before you can make a guess ;)')
         }
     }
 
     if (args[0] == 'end' || args[0] == 'e') {
         end()
+        msg.channel.send("goodbye")
     }
 
     if (args[0] == 'restart' || args[0] == 'r') {
         end()
         start()
+        msg.channel.send('restarted')
     }
 
-    if (args[0] == 'rules') {
-
+    if (args[0] == 'rules' || args[0] == 'ru') {
+        msg.delete()
+        // msg.channel.send('***RULES***\nIn mastermind, there is a code-guesser and a maker however, you will **only be guessing** the code.\nWhen you write "!mastermind start", or mm s, the game begins.\nIt also states what colors are within the game.\nThen you use the command "mastermind guess", or mm g, followed by the colors you wish to guess\n***example:***\n***mm g red white black purple***\nthen the bot answers with how many right colors you had and how many of those were in the right slots.')
+        msg.channel.send('***xXx_RULES_xXx***\nThe goal of the game is to guess the code the bot has chosen after you start the game with the command "mastermind start", or mm s.\nYou guess by using the command "mastermind guess", or mm g, followed by the colors you wish to guess.\n***xXx_-_EXAMPLE_-_xXx***\nAfter the game has started, the bot might have chosen the code "red black white yellow"\nIf you then say "mm g red white green purple" \nthen the bot would respond saying that you have :\n1 right color in the right spot \nand \n1 right color but in the wrong spot\nafterwards it tells you how many tries there are left.\nIf you have 0 tries, then you lose, but if you guess the right code the game will tell you and end itself.\nIf you want to end a game prematurely, use the command "mastermind end", or mm e.\nTo see a complete list of the commands, use mastermind commands, or mm c ')
     }
 
     if (args[0] == 'm') {
-        as
+        
     }
 
 }
