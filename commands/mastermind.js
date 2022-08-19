@@ -96,8 +96,6 @@ function lose() {
 module.exports = function (msg, args) {
 
     if (args[0] == 'test' || args[0] == 't') {
-        //     msg.channel.send('Mastermind!\nempty guess slot ' + guessslot + '\ncolor right/wrong/almost slot ' + indicatorslot + '\ncolors available ' + colors.join(" ") + '\ncolor code generated ' + ssc.join(" ") + '\ncolors from generated code ' + sscc.join(" "))
-        // tries = 0
         msg.channel.send('ok')
         gif(msg , 'winner')
         msg.channel.send('ssc:'+ssc.join(" ")+'\nsscc:'+sscc.join(" ")+'\ngame:'+game+'\ntries:'+tries)
