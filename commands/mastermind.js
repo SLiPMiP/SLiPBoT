@@ -53,7 +53,7 @@ function end() {
     rc = 0
     ssc = []
     sscc = []
-    troes = 0
+    tries = 0
 }
 
 async function congratulations(msg) {
@@ -65,7 +65,17 @@ async function congratulations(msg) {
     msg.channel.send(json.results[randomgif].url)
 }
 
+async function loser(msg) {
+    let keywords = 'doh'
+    let curl = `https://tenor.googleapis.com/v2/search?q=${keywords}&key=${process.env.TENORKEY}&client_key=my_test_app`
+    let response = await fetch(curl)
+    let json = await response.json()
+    const randomgif = Math.floor(Math.random() * json.results.length)
+    msg.channel.send(json.results[randomgif].url)
+}
+
 function guess(msg, args) {
+    tries = tries - 1
     for (let i = 0; i < args.length; i++) {
         if (sscc[i] == args[i]) {
             rcs += 1
@@ -73,13 +83,16 @@ function guess(msg, args) {
             rc += 1
         }
     }
-    msg.channel.send('youve guessed:\n***' + args.join(" ") + '***\n***' + rcs + '*** right colors, in the right slot\n***' + rc + '***right colors, but in the wrong slots')
-    msg.channel.send(`tries left: ${tries}`)
+
+    msg.channel.send('youve guessed:\n***' + args.join(" ") + '***\n***' + rcs + '*** right colors, in the right slot\n***' + rc + '***right colors, but in the wrong slots' + `\ntries left: ${tries}`)
     if (rcs == 4) {
         msg.channel.send('youve won!')
         congratulations(msg)
         end()
+    } else if (tries == 0) {
+        loser(msg)
     }
+
     rcs = 0
     rc = 0
 }
@@ -96,7 +109,7 @@ module.exports = function(msg, args) {
             if (ssc.length == 0) {
                 msg.channel.send('ssc emptyy')
             } else {
-                msg.channel.send(ssc.join(" ") + '\n' + sscc.join(" "))
+                msg.channel.send(ssc.join(" ") + '\n' + sscc.join(" ") + '\n' + `tries${tries}` + '\n' + `game${game}`)
             }
         }
     }
@@ -114,7 +127,6 @@ module.exports = function(msg, args) {
             args.shift()
             if (args.length == 4) {
                 if (tries > 0) {
-                    tries -= 1
                     guess(msg, args)
                 }
                 rcs = 0
@@ -127,19 +139,21 @@ module.exports = function(msg, args) {
 
     if (args[0] == 'end' || args[0] == 'e') {
         end()
+        msg.channel.send("Game over")
     }
 
     if (args[0] == 'restart' || args[0] == 'r') {
-        end()
-        start()
+        end(msg)
+        start(msg)
+        msg.channel.send("restarted")
     }
 
     if (args[0] == 'rules') {
-
+        msg.channel.send(`when you start a game the bot calculatyes a code made up of 4 different colors in a certain order.\nYou then have to guess the the right code.\nThere cannot be 2 of the same color in a code.\nYou have a maxiumum of 10 tries.`)
     }
 
-    if (args[0] == 'm') {
-        as
+    if (args[0] == 'help') {
+        msg.channel.send(`This is a game called MASTERMIND\nIn mastermind, you guess a code against a rival player, in this case it will always be the bot, check the web u nerd `)
     }
 
 }
