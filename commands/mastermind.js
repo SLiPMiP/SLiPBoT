@@ -75,14 +75,16 @@ async function loser(msg) {
 }
 
 function guess(msg, args) { <<
-    << << < HEAD
+    <<
+    << < HEAD
     tries = tries - 1
     for (let i = 0; i < args.length; i++) {
         if (sscc[i] == args[i]) {
             rcs += 1
         } else if (sscc.includes(args[i])) {
             rc += 1 ===
-                === =
+                ===
+                =
                 if (tries > 0) {
                     for (let i = 0; i < args.length; i++) {
                         if (sscc[i] == args[i]) {
@@ -90,7 +92,8 @@ function guess(msg, args) { <<
                         } else if (sscc.includes(args[i])) {
                             rc += 1
                         } >>>
-                        >>> > e69f52fe8c1e4665d65af013a9b2aaa426924ff6
+                        >>>
+                        > e69f52fe8c1e4665d65af013a9b2aaa426924ff6
                     }
                     msg.channel.send('youve guessed:\n***' + args.join(" ") + '***\n***' + rcs + '*** right colors, in the right slot\n***' + rc + '***right colors, but in the wrong slots')
                     msg.channel.send(`tries left: ${tries}`)
@@ -102,7 +105,8 @@ function guess(msg, args) { <<
                     rcs = 0
                     rc = 0
                 } <<
-                << << < HEAD
+                <<
+                << < HEAD
 
             msg.channel.send('youve guessed:\n***' + args.join(" ") + '***\n***' + rcs + '*** right colors, in the right slot\n***' + rc + '***right colors, but in the wrong slots' + `\ntries left: ${tries}`)
             if (rcs == 4) {
@@ -115,8 +119,10 @@ function guess(msg, args) { <<
 
             rcs = 0
             rc = 0 ===
-                === = >>>
-                >>> > e69f52fe8c1e4665d65af013a9b2aaa426924ff6
+                ===
+                = >>>
+                >>>
+                > e69f52fe8c1e4665d65af013a9b2aaa426924ff6
         }
 
         function lose() {
@@ -171,7 +177,8 @@ function guess(msg, args) { <<
 
             if (args[0] == 'end' || args[0] == 'e') {
                 end() <<
-                    << << < HEAD
+                    <<
+                    << < HEAD
                 msg.channel.send("Game over")
             }
 
@@ -187,7 +194,8 @@ function guess(msg, args) { <<
 
             if (args[0] == 'help') {
                 msg.channel.send(`This is a game called MASTERMIND\nIn mastermind, you guess a code against a rival player, in this case it will always be the bot, check the web u nerd `) ===
-                    === =
+                    ===
+                    =
                     msg.channel.send("goodbye")
             }
 
@@ -206,7 +214,8 @@ function guess(msg, args) { <<
             if (args[0] == 'm') {
 
                 >>>
-                >>> > e69f52fe8c1e4665d65af013a9b2aaa426924ff6
+                >>>
+                > e69f52fe8c1e4665d65af013a9b2aaa426924ff6
             }
 
         }
