@@ -175,5 +175,6 @@ module.exports = function (msg, args) {
 
     if (args[0] == 'cmds'|| args[0] == 'commands') {
         msg.channel.send('rules\nrestart\nhelp\nrestart\nend\nstart\nquess')
+        msg.channel.send('commands / cmds\nhelp\nrules\nstart\nquess\nrestart\nend')
     }
 }
