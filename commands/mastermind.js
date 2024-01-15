@@ -173,4 +173,7 @@ module.exports = function (msg, args) {
         msg.channel.send('***xXx_RULES_xXx***\nThe goal of the game is to guess the code the bot has chosen after you start the game with the command "mastermind start", or mm s.\nYou guess by using the command "mastermind guess", or mm g, followed by the colors you wish to guess.\n***xXx_-_EXAMPLE_-_xXx***\nAfter the game has started, the bot might have chosen the code "red black white yellow"\nIf you then say "mm g red white green purple" \nthen the bot would respond saying that you have :\n1 right color in the right spot \nand \n1 right color but in the wrong spot\nafterwards it tells you how many tries there are left.\nIf you have 0 tries, then you lose, but if you guess the right code the game will tell you and end itself.\nIf you want to end a game prematurely, use the command "mastermind end", or mm e.\nTo see a complete list of the commands, use mastermind commands, or mm c ')
     }
 
+    if (args[0] == 'cmds'|| args[0] == 'commands') {
+        msg.channel.send('rules\nrestart\nhelp\nrestart\nend\nstart\nquess')
+    }
 }
